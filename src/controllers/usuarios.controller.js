@@ -36,7 +36,7 @@ exports.registerUsuario = async (req, res) => {
         const [rowsUser] = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
         if (rowsUser.length === 0) {
                 const hashPass = bcrypt.hashSync(password, 10);
-                const [rows] = await pool.query('INSERT INTO users (username, password, avatar) VALUES (?, ?, ?, ?)', [username, hashPass, avatar]);
+                const [rows] = await pool.query('INSERT INTO users (username, password, avatar) VALUES (?, ?, ?)', [username, hashPass, avatar]);
                 if (rows.insertId) {
                     const token = jwt.sign({ username, user_id: rows.insertId }, SECRET_KEY, { expiresIn: '24h' });
                     res.status(200).send({
